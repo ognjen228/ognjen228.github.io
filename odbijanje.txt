@@ -1,0 +1,156 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace odbijanje
+{
+    public partial class Form1 : Form
+    {
+        int px = 1;
+        int py = 1;
+        int px1 = 2;
+        int py1 = 2;
+        int px2 = 3;
+        int py2 = 3;
+        int px3 = 3;
+        int py3 = 3;
+        int px4 = 3;
+        int py4 = 3;
+        public Form1()
+        {
+            InitializeComponent();
+            button2.Enabled = false;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            button2.Enabled = true;
+            button2.Focus();
+            label2.Text = "0";
+            label4.Text = "60";
+            timer1.Start();
+            timer2.Start();
+            timer3.Start();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            button3.Left += px;
+            button3.Top += py;
+            if (button3.Top > 330) py = (-1) * py;
+            if (button3.Left > 780) px = (-1) * px;
+            if (button3.Top <0) py = (-1) * py;
+            if (button3.Left <0) px = (-1) * px;
+
+            button4.Left += px1;
+            button4.Top += py1;
+            if (button4.Top > 330) py1 = (-1) * py1;
+            if (button4.Left > 780) px1 = (-1) * px1;
+            if (button4.Top <0) py1 = (-1) * py1;
+            if (button4.Left <0) px1 = (-1) * px1;
+
+            button6.Left += px2;
+            button6.Top += py2;
+            if (button6.Top > 330) py2 = (-1) * py2;
+            if (button6.Left > 780) px2 = (-1) * px2;
+            if (button6.Top < 0) py2 = (-1) * py2;
+            if (button6.Left < 0) px2 = (-1) * px2;
+
+            button7.Left += px3;
+            button7.Top += py3;
+            if (button7.Top > 330) py3 = (-1) * py3;
+            if (button7.Left > 780) px3 = (-1) * px3;
+            if (button7.Top < 0) py3 = (-1) * py3;
+            if (button7.Left < 0) px3 = (-1) * px3;
+
+            button8.Left += px4;
+            button8.Top += py4;
+            if (button8.Top > 330) py4 = (-1) * py4;
+            if (button8.Left > 780) px4 = (-1) * px4;
+            if (button8.Top < 0) py4 = (-1) * py4;
+            if (button8.Left < 0) px4 = (-1) * px4;
+
+            if (button2.Bounds.IntersectsWith(button3.Bounds))
+            {
+                timer1.Stop();
+                timer2.Stop();
+                timer3.Stop();
+                button2.Enabled = false;
+                MessageBox.Show("GAME OVER!");
+            }
+            if (button2.Bounds.IntersectsWith(button4.Bounds))
+            {
+                timer1.Stop();
+                timer2.Stop();
+                timer3.Stop();
+                button2.Enabled = false;
+                MessageBox.Show("GAME OVER!");
+            }
+            if (button2.Bounds.IntersectsWith(button6.Bounds))
+            {
+                timer1.Stop();
+                timer2.Stop();
+                timer3.Stop();
+                button2.Enabled = false;
+                MessageBox.Show("GAME OVER!");
+            }
+            if (button2.Bounds.IntersectsWith(button7.Bounds))
+            {
+                timer1.Stop();
+                timer2.Stop();
+                timer3.Stop();
+                button2.Enabled = false;
+                MessageBox.Show("GAME OVER!");
+            }
+            if (button2.Bounds.IntersectsWith(button8.Bounds))
+            {
+                timer1.Stop();
+                timer2.Stop();
+                timer3.Stop();
+                button2.Enabled = false;
+                MessageBox.Show("GAME OVER!");
+            }
+            if (button2.Bounds.IntersectsWith(button5.Bounds))
+            {
+                int poeni = Convert.ToInt16(label2.Text);
+                poeni++;
+                label2.Text = Convert.ToString(poeni);
+                Random x = new Random();
+                button5.Left = x.Next(785);
+                button5.Top = x.Next(335);
+            }
+            if (button2.Left < 0) button2.Left = 0;
+            if (button2.Top < 0) button2.Top = 0;
+            if (button2.Left > 770) button2.Left = 770;
+            if (button2.Top > 320) button2.Top = 320;
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            Random x = new Random();
+            button5.Left = x.Next(785);
+            button5.Top = x.Next(335);
+        }
+
+        private void timer3_Tick(object sender, EventArgs e)
+        {
+            int vreme = Convert.ToInt16(label4.Text);
+            vreme--;
+            label4.Text = Convert.ToString(vreme);
+        }
+
+        private void button2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 'w') button2.Top -= 15;
+            if (e.KeyChar == 'a') button2.Left -= 15;
+            if (e.KeyChar == 's') button2.Top += 15;
+            if (e.KeyChar == 'd') button2.Left += 15;
+        }
+    }
+}
