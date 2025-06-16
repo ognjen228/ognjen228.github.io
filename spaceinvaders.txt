@@ -1,0 +1,203 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace kretanje_space_invaders
+{
+    public partial class Form1 : Form
+    {
+        int pom = 4;
+        int pravac = 5;
+        int dole = 3;
+        public Form1()
+        {
+            InitializeComponent();
+            button2.Enabled = false;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            timer1.Start();
+            timer3.Start();
+            timer4.Start();
+            label2.Text = "0";
+            label4.Text = "60";
+            button2.Left = 147;
+            button2.Top = 253;
+            button3.Left = 1000;
+            button3.Top = 1000;
+            button4.Left = 110;
+            button4.Top = 82;
+            button5.Left = 62;
+            button5.Top = 33;
+            button6.Left = 258;
+            button6.Top = 6;
+            button2.Enabled = true;
+            button2.Focus();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (pravac == 0) button2.Left += pom;
+            if (pravac == 2) button2.Left -= pom;
+            if (button2.Left > 345) button2.Left = -25;
+            if (button2.Left <-25) button2.Left = 345;
+
+            if (button3.Bounds.IntersectsWith(button4.Bounds))
+            {
+                int poeni = Convert.ToInt16(label2.Text);
+                poeni++;
+                label2.Text = Convert.ToString(poeni);
+                Random x = new Random();
+                button4.Left = x.Next(295);
+                button4.Top = x.Next(40);
+                
+            }
+            if (button3.Bounds.IntersectsWith(button5.Bounds))
+            {
+                int poeni = Convert.ToInt16(label2.Text);
+                poeni++;
+                label2.Text = Convert.ToString(poeni);
+                Random z = new Random();
+                button5.Left = z.Next(295);
+                button5.Top = z.Next(40);
+            }
+            if (button3.Bounds.IntersectsWith(button6.Bounds))
+            {
+                int poeni = Convert.ToInt16(label2.Text);
+                poeni++;
+                label2.Text = Convert.ToString(poeni);
+                Random y = new Random();
+                button6.Left = y.Next(295);
+                button6.Top = y.Next(40);
+            }
+            if (button2.Bounds.IntersectsWith(button4.Bounds))
+            {
+                timer1.Stop();
+                timer2.Stop();
+                timer3.Stop();
+                timer4.Stop();
+                button2.Enabled = false;
+                MessageBox.Show("GAME OVER!");
+            }
+            if (button2.Bounds.IntersectsWith(button5.Bounds))
+            {
+                timer1.Stop();
+                timer2.Stop();
+                timer3.Stop();
+                timer4.Stop();
+                button2.Enabled = false;
+                MessageBox.Show("GAME OVER!");
+            }
+            if (button2.Bounds.IntersectsWith(button6.Bounds))
+            {
+                timer1.Stop();
+                timer2.Stop();
+                timer3.Stop();
+                timer4.Stop();
+                button2.Enabled = false;
+                MessageBox.Show("GAME OVER!");
+            }
+            if(button4.Top>295)
+            {
+                timer1.Stop();
+                timer2.Stop();
+                timer3.Stop();
+                timer4.Stop();
+                button2.Enabled = false;
+                MessageBox.Show("GAME OVER!");
+            }
+            if (button5.Top > 295)
+            {
+                timer1.Stop();
+                timer2.Stop();
+                timer3.Stop();
+                timer4.Stop();
+                button2.Enabled = false;
+                MessageBox.Show("GAME OVER!");
+            }
+            if (button6.Top > 295)
+            {
+                timer1.Stop();
+                timer2.Stop();
+                timer3.Stop();
+                timer4.Stop();
+                button2.Enabled = false;
+                MessageBox.Show("GAME OVER!");
+            }
+            if(label2.Text == "5") dole = 4;
+            if (label2.Text == "10") dole = 5;
+            if (label2.Text == "15") dole = 7;
+            if (label2.Text == "20")
+            {
+                timer1.Stop();
+                timer2.Stop();
+                timer3.Stop();
+                timer4.Stop();
+                button2.Enabled = false;
+                MessageBox.Show("POBEDIO SI!");
+            }
+            if(label4.Text=="0")
+            {
+                timer1.Stop();
+                timer2.Stop();
+                timer3.Stop();
+                timer4.Stop();
+                button2.Enabled = false;
+                MessageBox.Show("POBEDIO SI!");
+            }
+        }
+
+        private void button2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar =='a') pravac =2;
+            if (e.KeyChar =='d') pravac =0;
+            if(e.KeyChar ==' ')
+            {
+                button3.Left = button2.Left + 10;
+                button3.Top = button2.Top + 10;
+                timer2.Start();
+            }
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            button3.Top -= 5;
+        }
+
+        private void timer3_Tick(object sender, EventArgs e)
+        {
+            button4.Top += dole;
+            button5.Top += dole;
+            button6.Top += dole;
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void timer4_Tick(object sender, EventArgs e)
+            {
+                int vreme = Convert.ToInt16(label4.Text);
+                vreme--;
+                label4.Text = Convert.ToString(vreme);
+            }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
