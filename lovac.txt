@@ -1,0 +1,134 @@
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
+
+namespace lovac
+{
+    public partial class Form1 : Form
+    {
+        private int brzina = 5;
+        private int nadji = 2;
+        private Random random = new Random();
+        private List<Button> buttons = new List<Button>();
+
+        public Form1()
+        {
+            InitializeComponent();
+            button2.Enabled = false;
+            buttons.AddRange(new Button[] { button3, button4, button5, button6 });
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            foreach (var button in buttons)
+            {
+                dugme(button);
+                MoveTowards(button);
+                if (button2.Bounds.IntersectsWith(button.Bounds))
+                {
+                    EndGame();
+                    return;
+                }
+            }
+        }
+
+        private void dugme(Button button)
+        {
+            int smer = random.Next(4);
+            switch (smer)
+            {
+                case 0: button.Left += brzina; break;
+                case 1: button.Top += brzina; break;
+                case 2: button.Left -= brzina; break;
+                case 3: button.Top -= brzina; break;
+            }
+        }
+
+        private void MoveTowards(Button button)
+        {
+            if (button2.Left < button.Left) button.Left -= nadji;
+            if (button2.Top < button.Top) button.Top -= nadji;
+            if (button2.Left > button.Left) button.Left += nadji;
+            if (button2.Top > button.Top) button.Top += nadji;
+        }
+
+        private void EndGame()
+        {
+            timer1.Stop();
+            timer2.Stop();
+            timer3.Stop();
+            button2.Enabled = false;
+            MessageBox.Show("GAME OVER!");
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            button2.Enabled = true;
+            label2.Text = "0";
+            label4.Text = "120";
+            timer1.Start();
+            timer2.Start();
+            timer3.Start();
+            button2.Left = 380;
+            button2.Top = 150;
+            button2.Focus();
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            button7.Left = random.Next(785);
+            button7.Top = random.Next(335);
+        }
+
+        private void button2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            igrac(e.KeyChar);
+            CheckBounds();
+
+            int poeni = Convert.ToInt32(label2.Text);
+            if (button2.Bounds.IntersectsWith(button7.Bounds))
+            {
+                poeni++;
+                button7.Left = random.Next(1335);
+                button7.Top = random.Next(649);
+            }
+            label2.Text = poeni.ToString();
+        }
+
+        private void igrac(char key)
+        {
+            switch (key)
+            {
+                case 'w': button2.Top -= 15; break;
+                case 'a': button2.Left -= 15; break;
+                case 's': button2.Top += 15; break;
+                case 'd': button2.Left += 15; break;
+            }
+        }
+        private void CheckBounds()
+        {
+            if (button2.Left < 0) button2.Left = 0;
+            if (button2.Top < 0) button2.Top = 0;
+            if (button2.Left > 760) button2.Left =760;
+            if (button2.Top > 310) button2.Top = 310;
+        }
+        private void timer3_Tick(object sender, EventArgs e)
+        {
+            int vreme = Convert.ToInt32(label4.Text);
+            vreme--;
+            if (vreme <= 0)
+            {
+                timer1.Stop();
+                timer2.Stop();
+                timer3.Stop();
+                button2.Enabled = false;
+                MessageBox.Show("Igra je gotova!");
+            }
+            else
+            {
+                label4.Text = vreme.ToString();
+            }
+        }
+
+    }
+}
